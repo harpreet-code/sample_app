@@ -7,6 +7,7 @@ group :development do
 end
 
 group :test do 
+  gem 'spork', '0.8.5'
   gem 'rspec', '2.0.1' 
   gem 'webrat', '0.7.1'
 end
