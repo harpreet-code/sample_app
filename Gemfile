@@ -3,12 +3,13 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.0'
 
 group :development do 
-  gem 'rspec-rails', '2.0.1'
+  gem "rspec-rails"
+  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 end
 
 group :test do 
-  gem 'spork', '0.8.5'
-  gem 'rspec', '2.0.1' 
+  #gem 'spork', '~> 0.9.0.rc'
+  gem "rspec-rails" 
   gem 'webrat', '0.7.1'
 end
 
@@ -19,11 +20,8 @@ end
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 gem 'sqlite3'
-
 gem 'pg'
-
 
 # Gems used only for assets and not required
 # in production environments by default.
