@@ -8,15 +8,18 @@ group :development do
 end
 
 group :test do 
+  # this is part of the tutorial but I don't like spork
   #gem 'spork', '~> 0.9.0.rc'
   gem "rspec-rails" 
   gem 'webrat', '0.7.1'
+  gem 'factory_girl_rails', '1.0'
 end
 
 group :production do
   gem 'therubyracer-heroku'
 end
 
+gem 'gravatar_image_tag', '1.0.0.pre2'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
