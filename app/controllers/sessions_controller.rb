@@ -12,10 +12,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       sign_in user
-      logger.debug "The cookie for remember token is : #{cookies.signed[:remember_token]}" 
-      logger.debug "The user id is : #{user.id}"
-      logger.debug "The user salt is : #{user.salt}"
-      redirect_to user
+      redirect_back_or user
     end
   end
   
