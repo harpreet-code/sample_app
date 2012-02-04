@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
-  before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => :destroy
+  before_filter :authenticate,  :only => [:index, :edit, :update, :destroy]
+  before_filter :correct_user,  :only => [:edit, :update]
+  before_filter :admin_user,    :only => :destroy
+  before_filter :not_signed_in, :only => [:create, :new]
 
   def new
     @user = User.new
@@ -68,6 +69,11 @@ class UsersController < ApplicationController
     
     def admin_user
       @user = User.find(params[:id])
+      logger.debug "Current user admin?: #{current_user.admin?}"
       redirect_to(root_path) if !current_user.admin? || current_user?(@user)
+    end
+    
+    def not_signed_in
+      redirect_to(root_path) unless !signed_in?
     end
 end
