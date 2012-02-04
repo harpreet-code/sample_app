@@ -9,12 +9,12 @@ describe "LayoutLinks" do
     get '/contact'
     response.should have_selector('title', :content => "Contact")
   end
-  
+
   it "should have a About page at '/'" do
     get '/about'
     response.should have_selector('title', :content => "About")
-  end  
-    
+  end
+
   it "should have a Help page at '/'" do
     get '/help'
     response.should have_selector('title', :content => "Help")
@@ -34,17 +34,17 @@ describe "LayoutLinks" do
     click_link "Home"
     response.should have_selector('title', :content => "Home")
     click_link "Sign up now!"
-    response.should have_selector('title', :content => "Sign up")    
+    response.should have_selector('title', :content => "Sign up")
   end
-  
+
   describe "when not signed in" do
     it "should have a signin link" do
       visit root_path
       response.should have_selector("a", :href => signin_path,
-                                         :content => "Sign in")
+                                    :content => "Sign in")
     end
   end
-  
+
   describe "when signed in" do
     before(:each) do
       @user = Factory(:user)
@@ -53,12 +53,12 @@ describe "LayoutLinks" do
     it "should have a signout link" do
       visit root_path
       response.should have_selector("a", :href => signout_path,
-                                         :content => "Sign out")
+                                    :content => "Sign out")
     end
     it "should have a profile link" do
       visit root_path
       response.should have_selector("a", :href => user_path(@user),
-                                         :content => "Profile")
+                                    :content => "Profile")
     end
   end
 end
