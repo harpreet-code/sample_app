@@ -1,3 +1,9 @@
+<script type="text/javascript">
+	$(document).ready(function(){	
+		//default usage
+		$("#micropost_content").charCount();
+	});
+</script>
 <%= form_for @micropost do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
