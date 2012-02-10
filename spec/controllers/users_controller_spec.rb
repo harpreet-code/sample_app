@@ -66,7 +66,47 @@ describe UsersController do
       mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
       get :show, :id => @user
       response.should have_selector("span.content", :content => mp1.content)
-      response.should have_selector("span.content", :content => mp2.content)      
+      response.should have_selector("span.content", :content => mp2.content)   
+    end
+    
+    describe "signed-in user" do
+      it "should show delete links" do
+        test_sign_in(@user)
+        mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
+        mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
+        get :show, :id => @user
+        response.should have_selector("a", :"data-method" => "delete",
+                                               :content => "delete")
+      end
+    end    
+    
+    describe "annother signed-in user" do
+      it "should not show delete links" do
+        wrong_user = Factory(:user, :email => "user@example.net")
+        test_sign_in(wrong_user)
+        mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
+        mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
+        get :show, :id => @user
+        response.should_not have_selector("a", :"data-method" => "delete",
+                                               :content => "delete")
+      end
+    end
+    
+    describe "Micropost pagination" do
+
+      it "should paginate microposts" do
+        50.times do
+          @user.microposts.create!(:content => Faker::Lorem.sentence(5))
+        end
+        get :show, :id => @user
+        response.should have_selector("div.pagination")
+        response.should have_selector("span.disabled", :content => "Previous")
+        response.should have_selector("a", :href => "/users/1?page=2",
+                                           :content => "2")
+        response.should have_selector("a", :href => "/users/1?page=2",
+                                           :content => "Next")
+      end
+          
     end
   end
   
@@ -148,7 +188,7 @@ describe UsersController do
       gravatar_url = "http://gravatar.com/emails"
       response.should have_selector("a", :href => gravatar_url,
                                          :content => "change")
-    end    
+    end
   end
   
   describe "PUT 'update" do
